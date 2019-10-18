@@ -5,5 +5,5 @@ login = LoginManager()
 
 def configure_authentication(app):
     # authentication
-    login = LoginManager(app)
+    login.init_app(app)
     login.login_view = 'login'
