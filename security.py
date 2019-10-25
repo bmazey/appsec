@@ -6,4 +6,4 @@ login = LoginManager()
 def configure_authentication(app):
     # authentication
     login.init_app(app)
-    login.login_view = 'login'
+    login.login_view = 'pages.login'

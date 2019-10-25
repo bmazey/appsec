@@ -3,6 +3,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from forms import LoginForm, RegistrationForm, SpellCheckForm
 from models import User
 from database import db
+import subprocess
 
 
 pages = Blueprint('pages', __name__)
@@ -66,4 +67,7 @@ def logout():
 @login_required
 def spellcheck():
     form = SpellCheckForm()
-    # if form.validate_on_submit():
+    if form.validate_on_submit():
+        # strategy: create test file from user input, run spell_check binary, get console output, and delete temp file
+        with open("input.txt", "w") as text_file:
+            print(form.text.data, file=text_file)
