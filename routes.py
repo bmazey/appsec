@@ -74,7 +74,10 @@ def spellcheck():
         file.close()
 
         # use subprocess to execute spell_check binary
+        # windows implementation
         cmd = ["wsl.exe", "/mnt/c/Users/Brandon/PycharmProjects/appsec/spell_check", "/mnt/c/Users/Brandon/PycharmProjects/appsec/input.txt", "/mnt/c/Users/Brandon/PycharmProjects/appsec/wordlist.txt"]
         sub = subprocess.Popen(cmd)
         print(sub.communicate)
+
+
     return render_template('spellcheck.html', title='Spell Check', form=form)
