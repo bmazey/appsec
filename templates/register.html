@@ -13,7 +13,7 @@
         </p>
         <p>
             {{ form.phone.label }}<br>
-            {{ form.phone(size=64) }}<br>
+            {{ form.phone(size=32) }}<br>
             {% for error in form.phone.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
