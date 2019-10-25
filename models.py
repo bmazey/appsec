@@ -15,11 +15,11 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
 
     # password hashing methods
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
+    def set_password(self, phone, password):
+        self.password_hash = generate_password_hash(phone + password)
 
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
+    def check_password(self, phone, password):
+        return check_password_hash(self.password_hash, phone + password)
 
     # string representation dunder
     def __repr__(self):
