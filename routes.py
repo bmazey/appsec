@@ -87,6 +87,6 @@ def spellcheck():
         # delete the file
         os.remove("input.txt")
 
-        return render_template('spellcheck.html', title='Spell Check', form=form, output=result)
+        return render_template('spellcheck.html', title='Spell Check', form=form, input=form.content.data, output=result)
     else:
         return render_template('spellcheck.html', title='Spell Check', form=form)
