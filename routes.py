@@ -58,8 +58,9 @@ def login():
             # TODO - 2.factor custom failure code
             return render_template('login.html', title='Sign In', form=form, authenticated="Incorrect")
         login_user(user, remember=form.remember_me.data)
-        return redirect(url_for('pages.spellcheck'))
-    return render_template('login.html', title='Sign In', form=form, authenticated="success")
+        # return redirect(url_for('pages.spellcheck'))
+        return render_template('login.html', title='Sign In', form=form, authenticated="success")
+    return render_template('login.html', title='Sign In', form=form)
 
 
 @pages.route('/logout')
