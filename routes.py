@@ -80,7 +80,9 @@ def spellcheck():
 
         # linux implementation
         # cmd = ['./spell_check', 'input.txt', 'wordlist.txt']
-        result = check_output(cmd).decode("utf-8")
+
+        # convert result to csv, slice last two characters
+        result = check_output(cmd).decode("utf-8").replace('\n', ', ')[:-2]
 
         # delete the file
         os.remove("input.txt")
