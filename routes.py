@@ -1,9 +1,10 @@
-from flask import Blueprint, render_template, flash, redirect, url_for
+from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from forms import LoginForm, RegistrationForm, SpellCheckForm
 from models import User
 from database import db
-import subprocess
+from subprocess import check_output
+import os
 
 
 pages = Blueprint('pages', __name__)
@@ -67,7 +68,7 @@ def logout():
 @login_required
 def spellcheck():
     form = SpellCheckForm()
-    if form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         # create file to store user content
         file = open("input.txt", "w")
         file.write(form.content.data)
@@ -76,7 +77,14 @@ def spellcheck():
         # use subprocess to execute spell_check binary
         # windows implementation
         cmd = ["wsl.exe", "/mnt/c/Users/Brandon/PycharmProjects/appsec/spell_check", "/mnt/c/Users/Brandon/PycharmProjects/appsec/input.txt", "/mnt/c/Users/Brandon/PycharmProjects/appsec/wordlist.txt"]
-        sub = subprocess.Popen(cmd)
-        print(sub.communicate)
 
-    return render_template('spellcheck.html', title='Spell Check', form=form)
+        # linux implementation
+        # cmd = ['./spell_check', 'input.txt', 'wordlist.txt']
+        result = check_output(cmd).decode("utf-8")
+
+        # delete the file
+        os.remove("input.txt")
+
+        return render_template('spellcheck.html', title='Spell Check', form=form, output=result)
+    else:
+        return render_template('spellcheck.html', title='Spell Check', form=form)
