@@ -16,6 +16,9 @@ def create_app():
 
     db.init_app(app)
 
+    with app.app_context():
+        db.create_all()
+
     configure_authentication(app)
 
     # routing blueprint
@@ -25,13 +28,12 @@ def create_app():
 
 
 # database
-def init_database(app):
-    with app.app_context():
-        from models import User
-        db.create_all()
+# def init_database(app):
+#     with app.app_context():
+#         db.create_all()
 
 
 if __name__ == '__main__':
     app = create_app()
-    init_database(app)
+    # init_database(app)
     app.run()
