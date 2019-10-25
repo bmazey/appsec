@@ -55,7 +55,7 @@ def login():
         if user is None or not user.check_password(form.phone.data, form.password.data):
             # flash('Invalid username or password')
             # return redirect(url_for('pages.login'))
-            # TODO - 2factor custom failure code
+            # TODO - 2.factor custom failure code
             return render_template('login.html', title='Sign In', form=form, authenticated="Incorrect")
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for('pages.spellcheck'))
