@@ -61,6 +61,7 @@ def logout():
     logout_user()
     return redirect(url_for('pages.index'))
 
+
 @pages.route('/spell_check', methods=['GET', 'POST'])
 @login_required
 def spellcheck():
