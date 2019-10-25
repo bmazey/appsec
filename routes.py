@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, flash, redirect, url_for
-from flask_login import current_user, login_user, logout_user
-from forms import LoginForm, RegistrationForm
+from flask_login import current_user, login_user, logout_user, login_required
+from forms import LoginForm, RegistrationForm, SpellCheckForm
 from models import User
 from database import db
 
@@ -10,6 +10,7 @@ pages = Blueprint('pages', __name__)
 
 @pages.route('/')
 @pages.route('/index')
+@login_required
 def index():
     user = {'username': 'Miguel'}
     posts = [
@@ -59,3 +60,9 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('pages.index'))
+
+@pages.route('/spell_check', methods=['GET', 'POST'])
+@login_required
+def spellcheck():
+    form = SpellCheckForm()
+    # if form.validate_on_submit():
