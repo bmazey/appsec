@@ -10,7 +10,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
 
     # TODO - check the VARCHAR space on the phone number (64)
-    phone = db.Column(db.String(64), index=True, unique=True)
+    phone = db.Column(db.String(64), index=True)
     password_hash = db.Column(db.String(128))
 
     # password hashing methods
