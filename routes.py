@@ -79,5 +79,4 @@ def spellcheck():
         sub = subprocess.Popen(cmd)
         print(sub.communicate)
 
-
     return render_template('spellcheck.html', title='Spell Check', form=form)
