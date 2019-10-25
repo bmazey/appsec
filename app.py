@@ -13,6 +13,7 @@ sys.path.append(os.path.dirname(__name__))
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
+
     db.init_app(app)
 
     configure_authentication(app)
@@ -26,6 +27,7 @@ def create_app():
 # database
 def init_database(app):
     with app.app_context():
+        from models import User
         db.create_all()
 
 
