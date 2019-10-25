@@ -5,18 +5,17 @@ from models import User
 
 
 class LoginForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    phone = StringField('Phone', validators=[DataRequired()])
+    username = StringField('Username', id="uname", validators=[DataRequired()])
+    password = PasswordField('Password', id="pword", validators=[DataRequired()])
+    phone = StringField('Phone', id="2fa", validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
 
 
 class RegistrationForm(FlaskForm):
-    username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    phone = StringField('Phone', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    username = StringField('Username', id="uname", validators=[DataRequired()])
+    phone = StringField('Phone', id="2fa", validators=[DataRequired()])
+    password = PasswordField('Password', id="pwd", validators=[DataRequired()])
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
@@ -38,5 +37,5 @@ class RegistrationForm(FlaskForm):
 
 
 class SpellCheckForm(FlaskForm):
-    content = StringField('Text', validators=[DataRequired()])
+    content = StringField('Text', id="inputtext", validators=[DataRequired()])
     submit = SubmitField('Submit')

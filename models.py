@@ -8,7 +8,6 @@ class User(UserMixin, db.Model):
     # serializable properties
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
-    email = db.Column(db.String(120), index=True, unique=True)
 
     # TODO - check the VARCHAR space on the phone number (64)
     phone = db.Column(db.String(64), index=True, unique=True)
