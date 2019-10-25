@@ -30,8 +30,8 @@ def index():
 
 @pages.route('/register', methods=['GET', 'POST'])
 def register():
-    if current_user.is_authenticated:
-        return redirect(url_for('pages.spellcheck'))
+    # if current_user.is_authenticated:
+        # return redirect(url_for('pages.spellcheck'))
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, phone=form.phone.data)
@@ -47,8 +47,8 @@ def register():
 
 @pages.route('/login', methods=['GET', 'POST'])
 def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('pages.spellcheck'))
+    # if current_user.is_authenticated:
+        # return redirect(url_for('pages.spellcheck'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
