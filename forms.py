@@ -38,5 +38,5 @@ class RegistrationForm(FlaskForm):
 
 
 class SpellCheckForm(FlaskForm):
-    text = StringField('Text', validators=[DataRequired()])
+    content = StringField('Text', validators=[DataRequired()])
     submit = SubmitField('Submit')

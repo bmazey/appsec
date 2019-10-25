@@ -68,6 +68,8 @@ def logout():
 def spellcheck():
     form = SpellCheckForm()
     if form.validate_on_submit():
-        # strategy: create test file from user input, run spell_check binary, get console output, and delete temp file
-        with open("input.txt", "w") as text_file:
-            print(form.text.data, file=text_file)
+        # create file to store user content
+        file = open("input.txt", "w")
+        file.write(form.content.data)
+        file.close()
+    return render_template('spellcheck.html', title='Spell Check', form=form)

@@ -3,10 +3,11 @@
 {% block content %}
     <h1>Spell Check</h1>
     <form action="" method="post">
+        {{ form.hidden_tag() }}
         <p>
-            {{ form.text.label }}<br>
-            {{ form.text(size=32) }}<br>
-            {% for error in form.text.errors %}
+            {{ form.content.label }}<br>
+            {{ form.content(size=64) }}<br>
+            {% for error in form.content.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
