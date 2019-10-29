@@ -65,10 +65,26 @@ def test_valid_registration(app, init_database):
         phone=phone,
         password=password
     ), follow_redirects=False)
+    assert b'success' in res.data
+    assert res.status_code == 200
+
+
+def test_invalid_registration(app, init_database):
+    # this test fails because of a duplicate user
+    username = "test1_user"
+    phone = "8675309"
+    password = "wouldnt-you-like-to-know"
+    res = app.post("/register", data=dict(
+        username=username,
+        phone=phone,
+        password=password
+    ), follow_redirects=False)
+    assert b'failure' in res.data
     assert res.status_code == 200
 
 
 def test_valid_login(app, init_database):
+    # authenticate a registered user successfully
     username = "test1_user"
     phone = "8675309"
     password = "wouldnt-you-like-to-know"
@@ -77,15 +93,15 @@ def test_valid_login(app, init_database):
         phone=phone,
         password=password
     ), follow_redirects=False)
-    print(res.data)
     assert b'success' in res.data
     assert res.status_code == 200
 
 
 def test_invalid_2fa_login(app, init_database):
-    username = "test_user"
-    phone = "1111111"
-    password = "top-secret-password"
+    # correct username and password, but wrong 2fa device
+    username = "test2_user"
+    phone = "3333333"
+    password = "deep-state-secrets"
     res = app.post("/login", data=dict(
         username=username,
         phone=phone,
@@ -93,3 +109,23 @@ def test_invalid_2fa_login(app, init_database):
     ), follow_redirects=False)
     assert b'Incorrect' in res.data
     assert res.status_code == 200
+
+
+def test_spellcheck_functionality(app, init_database):
+    # authenticate a registered user successfully
+    username = "test1_user"
+    phone = "8675309"
+    password = "wouldnt-you-like-to-know"
+    res = app.post("/login", data=dict(
+        username=username,
+        phone=phone,
+        password=password
+    ), follow_redirects=False)
+    assert b'success' in res.data
+    assert res.status_code == 200
+
+    content = "Take a sad sogn and make it better. Remember to let her under your skyn, then you begin to make it betta."
+    res = app.post("/spell_check", data=dict(
+        content=content
+    ), follow_redirects=False)
+    print(res.data)
