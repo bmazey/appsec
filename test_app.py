@@ -12,3 +12,8 @@ def app():
 def test_login(app):
     res = app.get("/login")
     assert res.status_code == 200
+
+
+def test_registration(app):
+    res = app.get("/register")
+    assert res.status_code == 200
