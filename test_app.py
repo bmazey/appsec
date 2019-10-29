@@ -128,5 +128,5 @@ def test_spellcheck_functionality(app, init_database):
     res = app.post("/spell_check", data=dict(
         content=content
     ), follow_redirects=False)
-    print('response: ' + res.data)
+    print(res.data)
     assert b'sogn, skyn, betta' in res.data
