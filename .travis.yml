@@ -4,5 +4,6 @@ language: python
 python:
   - "3.4"
   - "3.7"
+before_install: chmod +x spell_check
 install: pip install -r requirements.txt
 script: tox
