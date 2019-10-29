@@ -130,3 +130,4 @@ def test_spellcheck_functionality(app, init_database):
     ), follow_redirects=False)
     print(res.data)
     assert b'sogn, skyn, betta' in res.data
+    assert res.status_code == 200
