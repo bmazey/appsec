@@ -10,12 +10,13 @@ def app():
     app.debug = True
 
     # disabling CSRF protection for testing purposes
-    app.WTF_CSRF_ENABLED = False
+    app.config['WTF_CSRF_ENABLED'] = False
+
     client = app.test_client()
     ctx = app.app_context()
     ctx.push()
 
-    yield client # magic happens here
+    yield client  # magic happens here
 
     ctx.pop()
 
@@ -55,19 +56,33 @@ def test_registration_page(app):
     assert res.status_code == 200
 
 
-def test_registration(app, init_database):
-    username = "test_user"
-    phone = "8675309"
-    password = "top-secret-password"
+def test_valid_registration(app, init_database):
+    username = "new_user"
+    phone = "2222222"
+    password = "super-complex-password"
     res = app.post("/register", data=dict(
         username=username,
         phone=phone,
         password=password
-    ))
+    ), follow_redirects=False)
     assert res.status_code == 200
 
 
-def test_login(app, init_database):
+def test_valid_login(app, init_database):
+    username = "test1_user"
+    phone = "8675309"
+    password = "wouldnt-you-like-to-know"
+    res = app.post("/login", data=dict(
+        username=username,
+        phone=phone,
+        password=password
+    ), follow_redirects=False)
+    print(res.data)
+    assert b'success' in res.data
+    assert res.status_code == 200
+
+
+def test_invalid_2fa_login(app, init_database):
     username = "test_user"
     phone = "1111111"
     password = "top-secret-password"
@@ -75,5 +90,6 @@ def test_login(app, init_database):
         username=username,
         phone=phone,
         password=password
-    ))
+    ), follow_redirects=False)
+    assert b'Incorrect' in res.data
     assert res.status_code == 200
