@@ -1,6 +1,7 @@
 import os
 import sys
 from flask import Flask
+from flask_cors import CORS
 from database import db
 from security import configure_authentication
 from config import Config
@@ -23,6 +24,8 @@ def create_app():
 
     # routing blueprint
     app.register_blueprint(pages)
+
+    CORS(app)
 
     return app
 

@@ -123,6 +123,7 @@ def test_spellcheck_functionality(app, init_database):
     ), follow_redirects=False)
     assert b'success' in res.data
     assert res.status_code == 200
+    print(res.data)
 
     content = "Take a sad sogn and make it better. Remember to let her under your skyn, then you begin to make it betta."
     res = app.post("/spell_check", data=dict(
