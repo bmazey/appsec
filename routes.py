@@ -10,24 +10,6 @@ import os
 pages = Blueprint('pages', __name__)
 
 
-@pages.route('/')
-@pages.route('/index')
-@login_required
-def index():
-    user = {'username': 'Miguel'}
-    posts = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beautiful day in Portland!'
-        },
-        {
-            'author': {'username': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }
-    ]
-    return render_template('index.html', title='Home', user=user, posts=posts)
-
-
 @pages.route('/register', methods=['GET', 'POST'])
 def register():
     # if current_user.is_authenticated:
