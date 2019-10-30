@@ -123,12 +123,16 @@ def test_spellcheck_functionality(app, init_database):
     ), follow_redirects=False)
     assert b'success' in res.data
     assert res.status_code == 200
-    print(res.data)
+    print(res)
 
     content = "Take a sad sogn and make it better. Remember to let her under your skyn, then you begin to make it betta."
     res = app.post("/spell_check", data=dict(
         content=content
     ), follow_redirects=False)
-    print(res.data)
     assert b'sogn, skyn, betta' in res.data
     assert res.status_code == 200
+
+
+def test_cors_headers(app):
+    res = app.options("/login")
+    print(res)

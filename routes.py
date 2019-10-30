@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, request
+from flask_cors import cross_origin
 from flask_login import current_user, login_user, logout_user, login_required
 from forms import LoginForm, RegistrationForm, SpellCheckForm
 from models import User
@@ -30,9 +31,11 @@ def register():
 
 
 @pages.route('/login', methods=['GET', 'POST'])
+@cross_origin()
 def login():
     # if current_user.is_authenticated:
         # return redirect(url_for('pages.spellcheck'))
+    print(request.headers)
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -54,6 +57,7 @@ def logout():
 
 
 @pages.route('/spell_check', methods=['GET', 'POST'])
+@cross_origin()
 @login_required
 def spellcheck():
     form = SpellCheckForm()
