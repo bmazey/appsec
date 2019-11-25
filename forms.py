@@ -31,3 +31,8 @@ class RegistrationForm(FlaskForm):
 class SpellCheckForm(FlaskForm):
     content = StringField('Text', id="inputtext", validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
+class HistoryForm(FlaskForm):
+    # TODO - implement for admin!
+    submit = SubmitField('Submit')

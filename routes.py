@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_cors import cross_origin
 from flask_login import current_user, login_user, logout_user, login_required
 from forms import LoginForm, RegistrationForm, SpellCheckForm
-from models import User
+from models import User, Submission
 from database import db
 from subprocess import check_output
 import os
@@ -35,7 +35,6 @@ def register():
 def login():
     # if current_user.is_authenticated:
         # return redirect(url_for('pages.spellcheck'))
-    print(request.headers)
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -84,6 +83,21 @@ def spellcheck():
         original = form.content.data
         form.content.data = ""
 
+        # create submission object
+        user = User.query.filter_by(username=current_user.username).first()
+        submission = Submission(original=original, result=result, user_id=user.id)
+        db.session.add(submission)
+        db.session.commit()
+
         return render_template('spellcheck.html', title='Spell Check', form=form, input=original, output=result)
     else:
         return render_template('spellcheck.html', title='Spell Check', form=form)
+
+
+@pages.route('/history', methods=['GET'])
+@cross_origin()
+@login_required
+def history():
+    user = User.query.filter_by(username=current_user.username).first()
+    submissions = user.submissions.all()
+    return render_template('history.html', user=user, submissions=submissions)

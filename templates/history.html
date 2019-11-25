@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>User: {{ user.username }}</h1>
+    <hr>
+    {% for submission in submissions %}
+    <p>
+    {{ submission.author.username }} submits: <b>{{ submission.original }}</b> <b>{{ submission.result }}</b>
+    </p>
+    {% endfor %}
+{% endblock %}
