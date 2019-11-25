@@ -6,6 +6,7 @@ from models import User, Submission
 from database import db
 from subprocess import check_output
 import os
+import re
 
 
 pages = Blueprint('pages', __name__)
@@ -52,7 +53,7 @@ def login():
 @pages.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('pages.index'))
+    return redirect(url_for('pages.login'))
 
 
 @pages.route('/spell_check', methods=['GET', 'POST'])
@@ -100,4 +101,23 @@ def spellcheck():
 def history():
     user = User.query.filter_by(username=current_user.username).first()
     submissions = user.submissions.all()
-    return render_template('history.html', user=user, submissions=submissions)
+    return render_template('history.html', user=user, total=len(submissions), submissions=submissions)
+
+
+@pages.route('/history/<query>', methods=['GET'])
+@cross_origin()
+@login_required
+def history_query(query):
+    user = User.query.filter_by(username=current_user.username).first()
+
+    # we don't want all submissions, we want a submission by id
+    # get all digits from <query> value
+    submission_id = re.findall('\d+', query)
+    submission = Submission.query.filter_by(id=submission_id[0], user_id=user.id).first()
+
+    # if submission is null that means a different user is trying to view!
+    if submission is None:
+        return render_template('unauthorized.html')
+    else:
+        return render_template('history-query.html', submission=submission)
+
