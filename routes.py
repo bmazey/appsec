@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_cors import cross_origin
 from flask_login import current_user, login_user, logout_user, login_required
-from forms import LoginForm, RegistrationForm, SpellCheckForm
+from forms import LoginForm, RegistrationForm, SpellCheckForm, HistoryForm
 from models import User, Submission
 from database import db
 from subprocess import check_output
@@ -95,13 +95,22 @@ def spellcheck():
         return render_template('spellcheck.html', title='Spell Check', form=form)
 
 
-@pages.route('/history', methods=['GET'])
+@pages.route('/history', methods=['GET', 'POST'])
 @cross_origin()
 @login_required
 def history():
-    user = User.query.filter_by(username=current_user.username).first()
-    submissions = user.submissions.all()
-    return render_template('history.html', user=user, total=len(submissions), submissions=submissions)
+    if current_user.username == 'admin':
+        form = HistoryForm()
+        if request.method == 'POST' and form.validate_on_submit():
+            user = User.query.filter_by(username=form.content.data).first()
+            submissions = user.submissions.all()
+            return render_template('history-form.html', form=form, user=user, total=len(submissions), submissions=submissions)
+        else:
+            return render_template('history-form.html', form=form)
+    else:
+        user = User.query.filter_by(username=current_user.username).first()
+        submissions = user.submissions.all()
+        return render_template('history.html', user=user, total=len(submissions), submissions=submissions)
 
 
 @pages.route('/history/<query>', methods=['GET'])
@@ -113,11 +122,16 @@ def history_query(query):
     # we don't want all submissions, we want a submission by id
     # get all digits from <query> value
     submission_id = re.findall('\d+', query)
-    submission = Submission.query.filter_by(id=submission_id[0], user_id=user.id).first()
+
+    # admin features
+    if current_user.username == 'admin':
+        submission = Submission.query.filter_by(id=submission_id[0]).first()
+
+    else:
+        submission = Submission.query.filter_by(id=submission_id[0], user_id=user.id).first()
 
     # if submission is null that means a different user is trying to view!
     if submission is None:
         return render_template('unauthorized.html')
     else:
         return render_template('history-query.html', submission=submission)
-

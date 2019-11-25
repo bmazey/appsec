@@ -2,11 +2,12 @@
 
 {% block content %}
     <h1>User: {{ user.username }}</h1>
-    <p id="numqueries">{{ total }}</p>
+    <p id="numqueries">total queries: {{ total }}</p>
     <hr>
     {% for submission in submissions %}
-    <p id="query{{ submission.id }}">
-    {{ submission.author.username }} submits: <b>{{ submission.original }}</b> <b>{{ submission.result }}</b>
-    </p>
+        <a id="query{{ submission.id }}" href="/history/query{{ submission.id }}">
+            <!-- {{ submission.author.username }} submits: <b>{{ submission.original }}</b> <b>{{ submission.result }}</b> -->
+            query{{ submission.id }}
+        </a>
     {% endfor %}
 {% endblock %}
