@@ -69,10 +69,10 @@ def spellcheck():
 
         # use subprocess to execute spell_check binary
         # windows implementation
-        # cmd = ["wsl.exe", "/mnt/c/Users/Brandon/PycharmProjects/appsec/spell_check", "/mnt/c/Users/Brandon/PycharmProjects/appsec/input.txt", "/mnt/c/Users/Brandon/PycharmProjects/appsec/wordlist.txt"]
+        cmd = ["wsl.exe", "/mnt/c/Users/Brandon/PycharmProjects/appsec/spell_check", "/mnt/c/Users/Brandon/PycharmProjects/appsec/input.txt", "/mnt/c/Users/Brandon/PycharmProjects/appsec/wordlist.txt"]
 
         # linux implementation
-        cmd = ['./spell_check', 'input.txt', 'wordlist.txt']
+        # cmd = ['./spell_check', 'input.txt', 'wordlist.txt']
 
         # convert result to csv, slice last two characters
         result = check_output(cmd).decode("utf-8").replace('\n', ', ')[:-2]

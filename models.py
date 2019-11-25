@@ -13,6 +13,9 @@ class User(UserMixin, db.Model):
     phone = db.Column(db.String(64), index=True)
     password_hash = db.Column(db.String(128))
 
+    # assignment 3
+    submissions = db.relationship('Submission', backref='author', lazy='dynamic')
+
     # password hashing methods
     def set_password(self, phone, password):
         self.password_hash = generate_password_hash(phone + password)
@@ -23,6 +26,17 @@ class User(UserMixin, db.Model):
     # string representation dunder
     def __repr__(self):
         return '<User {}>'.format(self.username)
+
+
+class Submission(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    original = db.Column(db.String(140))
+    result = db.Column(db.String(140))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    # string representation dunder
+    def __repr__(self):
+        return '<Submission {}>'.format(self.original)
 
 
 # used to load user from database for login purposes
