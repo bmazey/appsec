@@ -2,6 +2,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from database import db
 from security import login
+import datetime
 
 
 class User(UserMixin, db.Model):
@@ -15,6 +16,7 @@ class User(UserMixin, db.Model):
 
     # assignment 3
     submissions = db.relationship('Submission', backref='author', lazy='dynamic')
+    authentications = db.relationship('Authentication', backref='logger', lazy='dynamic')
 
     # password hashing methods
     def set_password(self, phone, password):
@@ -37,6 +39,17 @@ class Submission(db.Model):
     # string representation dunder
     def __repr__(self):
         return '<Submission {}>'.format(self.original)
+
+
+class Authentication(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    last_login = db.Column(db.DateTime, default=datetime.datetime.utcnow())
+    last_logout = db.Column(db.DateTime)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    # string representation dunder
+    def __repr__(self):
+        return '<Authentication {}>'.format(self.last_login)
 
 
 # used to load user from database for login purposes

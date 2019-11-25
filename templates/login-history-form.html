@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>User Authentication History</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.content.label }}<br>
+            {{ form.content(size=64) }}<br>
+            {% for error in form.content.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p id="userid">{{ input }}</p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    {% if user is defined %}
+    <h1>User: {{ user.username }}</h1>
+        <hr>
+        {% for authentication in authentications %}
+            <p id="login{{ authentication.id }}_time">Login: {{ authentication.last_login }}</p>
+            {% if authentication.last_logout == None %}
+            <p id="logout{{ authentication.id }}_time">Logout: N/A</p>
+            {% else %}
+            <p id="logout{{ authentication.id }}_time">Logout: {{ authentication.last_logout }}</p>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

@@ -36,3 +36,8 @@ class SpellCheckForm(FlaskForm):
 class HistoryForm(FlaskForm):
     content = StringField('Text', id="userquery", validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
+class AuthenticationHistoryForm(FlaskForm):
+    content = StringField('Text', id="userid", validators=[DataRequired()])
+    submit = SubmitField('Submit')
