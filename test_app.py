@@ -31,17 +31,17 @@ def init_database():
     user2 = User(username='test2_user', phone='1111111')
 
     # let's make an admin
-    # admin = User(username='admin', phone='12345678901')
+    admin = User(username='admin', phone='12345678901')
 
     # set passwords
     user1.set_password('8675309', 'wouldnt-you-like-to-know')
     user2.set_password('1111111', 'deep-state-secrets')
-    # admin.set_password('12345678901', 'Administrator@1')
+    admin.set_password('12345678901', 'Administrator@1')
 
     # add to db
     db.session.add(user1)
     db.session.add(user2)
-    # db.session.add(admin)
+    db.session.add(admin)
 
     # Commit the changes for the users
     db.session.commit()
