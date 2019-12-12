@@ -7,7 +7,7 @@ class Config(object):
     # secret key
     # SECRET_KEY = os.environ.get('SECRET_KEY') or 'wouldnt-you-like-to-know'
     try:
-        SECRET_KEY = open("/run/secrets/my_secret", "r").read().strip()
+        SECRET_KEY = open("/run/secrets/key_secret", "r").read().strip()
     except Exception:
         SECRET_KEY = 'wouldnt-you-like-to-know'
 

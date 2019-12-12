@@ -30,8 +30,10 @@ def create_app():
 
     # register admin user automatically
     try:
-        admin = User(username='admin', phone='12345678901')
-        admin.set_password('12345678901', 'Administrator@1')
+        admin_phone = open("/run/secrets/admin_phone", "r").read().strip()
+        admin_password = open("/run/secrets/admin_password", "r").read().strip()
+        admin = User(username='admin', phone=admin_phone)
+        admin.set_password(admin_phone, admin_password)
         db.session.add(admin)
         db.session.commit()
 

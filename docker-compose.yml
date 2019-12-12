@@ -6,7 +6,13 @@ services:
         ports:
             - 8080:5000
         secrets:
-            - my_secret
+            - key_secret
+            - admin_phone
+            - admin_password
 secrets:
-  my_secret:
-    file: my_secret.txt
+  key_secret:
+    file: key_secret.txt
+  admin_phone:
+    file: admin_phone.txt
+  admin_password:
+    file: admin_password.txt
