@@ -220,6 +220,7 @@ def test_admin_history_query(app, init_database):
     assert b'Take a sad sogn and make it better. Remember to let her under your skyn, then you begin to make it betta.' in res.data
     return
 
+
 def test_unauthorized_view(app, init_database):
     # create content
     username = "test1_user"
