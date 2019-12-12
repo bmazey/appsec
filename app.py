@@ -33,4 +33,6 @@ def create_app():
 if __name__ == '__main__':
     app = create_app()
     # init_database(app)
-    app.run(host='0.0.0.0')
+    # the below makes Travis mad :(
+    # app.run(host='0.0.0.0')
+    app.run()
