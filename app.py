@@ -20,6 +20,18 @@ def create_app():
 
     with app.app_context():
         db.create_all()
+        # register admin user automatically
+        try:
+            admin_phone = open("/run/secrets/admin_phone", "r").read().strip()
+            admin_password = open("/run/secrets/admin_password", "r").read().strip()
+
+            admin = User(username='admin', phone=admin_phone)
+            admin.set_password(admin_phone, admin_password)
+            db.session.add(admin)
+            db.session.commit()
+
+        except Exception:
+            pass
 
     configure_authentication(app)
 
@@ -28,20 +40,6 @@ def create_app():
 
     CORS(app)
 
-    # register admin user automatically
-    try:
-        admin_phone = open("/run/secrets/admin_phone", "r").read().strip()
-        admin_password = open("/run/secrets/admin_password", "r").read().strip()
-        print('phone: ' + str(admin_phone))
-        print('password: ' + str(admin_password))
-        admin = User(username='admin', phone=admin_phone)
-        admin.set_password(admin_phone, admin_password)
-        db.session.add(admin)
-        db.session.commit()
-
-    except Exception:
-        pass
-
     return app
 
 
@@ -49,5 +47,5 @@ if __name__ == '__main__':
     app = create_app()
     # init_database(app)
     # the below makes Travis mad :(
-    app.run(host='0.0.0.0')
-    # app.run()
+    # app.run(host='0.0.0.0')
+    app.run()
