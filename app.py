@@ -32,6 +32,8 @@ def create_app():
     try:
         admin_phone = open("/run/secrets/admin_phone", "r").read().strip()
         admin_password = open("/run/secrets/admin_password", "r").read().strip()
+        print('phone: ' + str(admin_phone))
+        print('password: ' + str(admin_password))
         admin = User(username='admin', phone=admin_phone)
         admin.set_password(admin_phone, admin_password)
         db.session.add(admin)
@@ -47,5 +49,5 @@ if __name__ == '__main__':
     app = create_app()
     # init_database(app)
     # the below makes Travis mad :(
-    # app.run(host='0.0.0.0')
-    app.run()
+    app.run(host='0.0.0.0')
+    # app.run()
