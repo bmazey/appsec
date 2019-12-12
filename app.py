@@ -6,6 +6,7 @@ from database import db
 from security import configure_authentication
 from config import Config
 from routes import pages
+from models import User
 
 sys.path.append(os.path.dirname(__name__))
 
@@ -28,6 +29,14 @@ def create_app():
     CORS(app)
 
     # register admin user automatically
+    try:
+        admin = User(username='admin', phone='12345678901')
+        admin.set_password('12345678901', 'Administrator@1')
+        db.session.add(admin)
+        db.session.commit()
+
+    except Exception:
+        pass
 
     return app
 
