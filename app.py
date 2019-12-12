@@ -27,6 +27,8 @@ def create_app():
 
     CORS(app)
 
+    # register admin user automatically
+
     return app
 
 
