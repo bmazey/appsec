@@ -8,3 +8,4 @@ tox
 tox-travis
 sqlmap
 sqlalchemy
+get-docker-secret

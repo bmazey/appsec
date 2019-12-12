@@ -5,3 +5,8 @@ services:
         build: .
         ports:
             - 8080:5000
+        secrets:
+            - my_secret
+secrets:
+  my_secret:
+    file: ./my_secret.txt
