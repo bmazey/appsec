@@ -4,7 +4,7 @@ services:
         restart: "no"
         build: .
         ports:
-            - 8080
+            - 5000
         secrets:
             - key_secret
             - admin_phone
