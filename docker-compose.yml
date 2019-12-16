@@ -10,7 +10,7 @@ services:
             - admin_phone
             - admin_password
     demo:
-        image: appsec_appsec
+        image: appsec:latest
         deploy:
             replicas: 4
         networks:
