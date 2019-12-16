@@ -9,6 +9,16 @@ services:
             - key_secret
             - admin_phone
             - admin_password
+    demo:
+        image: appsec_appsec
+        deploy:
+            replicas: 4
+        networks:
+            - mynet
+networks:
+  mynet:
+    driver: overlay
+
 secrets:
   key_secret:
     file: key_secret.txt
